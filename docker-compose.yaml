@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  lavarel-app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - "./:/usr/share/nginx"
+    networks:
+      - "app-network"
+
+  mysql-app:
+    image: mysql:5.7.22
+    ports:
+      - "3306:3306"
+    volumes:
+      - ".docker/mysql_data:/var/lib/mysql"
+    environment:
+      MYSQL_DATABASE: aula_infra
+      MYSQL_ROOT_PASSWORD: aula_infra
+      MYSQL_USER: usr
+      MYSQL_PASSWORD: usr
+    networks:
+      - app-network
+
+networks:
+  app-network:
+   driver: bridge
